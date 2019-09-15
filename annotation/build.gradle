@@ -1,0 +1,23 @@
+apply plugin: 'java-library'
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+}
+
+sourceCompatibility = "7"
+targetCompatibility = "7"
+
+
+apply plugin: 'com.novoda.bintray-release'
+
+publish {
+    userOrg = 'omooo2333'
+    groupId = 'top.omooo'
+    repoName = 'MethodTrack'
+    artifactId = 'method-track-annoation'
+    publishVersion = '0.1.0'
+    desc = 'Annotation for MethodTracker.'
+}
+
+//
+// ./gradlew clean build bintrayUpload -PbintrayUser=omooo23333 -PbintrayKey=8b6eac80122c2ecd83fae2df225b9d6e93815010 -PdryRun=false
