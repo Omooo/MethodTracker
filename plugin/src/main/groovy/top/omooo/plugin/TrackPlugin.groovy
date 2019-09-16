@@ -13,8 +13,13 @@ class TrackPlugin implements Plugin<Project> {
             println('/***************************/')
         }
 
+        project.repositories {
+            maven {
+                url "https://omooo2333.bintray.com/MethodTrack"
+            }
+        }
         project.dependencies {
-//            compile project(':annotation')
+            implementation 'top.omooo:method-track-annotation:0.1.1'
         }
     }
 }
