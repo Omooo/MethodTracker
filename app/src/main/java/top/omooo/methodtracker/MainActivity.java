@@ -5,9 +5,9 @@ import android.os.Bundle;
 
 import top.omooo.annotation.MethodTrack;
 
-@MethodTrack
 public class MainActivity extends AppCompatActivity {
 
+    @MethodTrack
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
