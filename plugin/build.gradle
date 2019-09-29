@@ -44,3 +44,14 @@ uploadArchives {
 
 sourceCompatibility = "7"
 targetCompatibility = "7"
+
+//apply plugin: 'com.novoda.bintray-release'
+//
+//publish {
+//    userOrg = 'omooo2333'
+//    groupId = 'top.omooo'
+//    repoName = 'MethodTrack'
+//    artifactId = 'method-track-plugin'
+//    publishVersion = '0.1.0'
+//    desc = 'Plugin for MethodTracker.'
+//}
