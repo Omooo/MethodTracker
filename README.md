@@ -49,8 +49,12 @@ apply plugin: 'top.omooo.track_plugin'
 D/MainActivity: ⇢ onCreate(Landroid/os/Bundle;)V: 101ms
 ```
 
+当然，如果你想 Trace 整个类的所有方法的耗时，只需在类上添加该注解即可。
+
+**注意：**目前 Trace 整个类时并不会自动 Trace 其内部类。
+
 ### 剩余未做
 
-1. Trace 整个类的方法耗时
+1. Trace 整个类时自动 Trace 其内部类
 2. Trace 方法路径
 3. 可视化
