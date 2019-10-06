@@ -11,6 +11,7 @@ import top.omooo.annotation.MethodTrack
 class TraceClassVisitor extends ClassVisitor {
 
     private String className
+    private boolean traceClass
 
     TraceClassVisitor(ClassVisitor classVisitor) {
         super(Opcodes.ASM7, classVisitor)
@@ -25,14 +26,24 @@ class TraceClassVisitor extends ClassVisitor {
     @Override
     MethodVisitor visitMethod(int access, String name, String descriptor, String signature, String[] exceptions) {
         def methodVisitor = cv.visitMethod(access, name, descriptor, signature, exceptions)
-        return new TraceMethodVisitor(api, methodVisitor, access, name, descriptor, className)
+        return new TraceMethodVisitor(api, methodVisitor, access, name, descriptor, className, traceClass)
+    }
+
+    @Override
+    AnnotationVisitor visitAnnotation(String descriptor, boolean visible) {
+        if (Type.getDescriptor(MethodTrack.class) == descriptor) {
+            traceClass = true
+        }
+        return super.visitAnnotation(descriptor, visible)
     }
 
     class TraceMethodVisitor extends AdviceAdapter {
 
         private String className
         private String methodName
-        private boolean isNeedTrace
+        private boolean traceCurrentMethod         // trace 当前方法
+        private boolean traceClassAllMethod        // trace 当前类的所有方法
+
         private int timeLocalIndex = 0
 
         TraceMethodVisitor(int api,
@@ -40,11 +51,13 @@ class TraceClassVisitor extends ClassVisitor {
                            int access,
                            String name,
                            String descriptor,
-                           String className) {
+                           String className,
+                           boolean traceClass) {
             super(api, methodVisitor, access, name, descriptor)
             String[] path = className.split("/")
             this.className = path[path.length - 1]
             this.methodName = name
+            this.traceClassAllMethod = traceClass
         }
 
         @Override
@@ -58,7 +71,7 @@ class TraceClassVisitor extends ClassVisitor {
         @Override
         protected void onMethodEnter() {
             super.onMethodEnter()
-            if (isNeedTrace) {
+            if ((traceClassAllMethod || traceCurrentMethod) && methodName != "<init>") {
                 timeLocalIndex = newLocal(Type.LONG_TYPE)
                 mv.visitMethodInsn(INVOKESTATIC, "java/lang/System", "currentTimeMillis", "()J", false)
                 mv.visitVarInsn(LSTORE, timeLocalIndex)
@@ -68,7 +81,7 @@ class TraceClassVisitor extends ClassVisitor {
         @Override
         protected void onMethodExit(int opcode) {
             super.onMethodExit(opcode)
-            if (isNeedTrace) {
+            if ((traceClassAllMethod || traceCurrentMethod) && methodName != "<init>") {
                 mv.visitMethodInsn(INVOKESTATIC, "java/lang/System", "currentTimeMillis", "()J", false)
                 mv.visitVarInsn(LLOAD, timeLocalIndex)
                 mv.visitInsn(LSUB)

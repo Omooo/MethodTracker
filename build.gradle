@@ -17,7 +17,12 @@ buildscript {
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
-        classpath 'top.omooo.plugin:plugin:1.0'
+
+        // 本地依赖
+//        classpath 'top.omooo.plugin:plugin:1.1'
+
+        // 远程依赖
+        classpath 'top.omooo:method-track-plugin:0.1.1'
 
         classpath 'com.novoda:bintray-release:0.9.1'
 
