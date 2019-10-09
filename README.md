@@ -21,7 +21,7 @@ repositories {
 ```
 
 ```groovy
-classpath 'top.omooo:method-track-plugin:0.1.0'
+classpath 'top.omooo:method-track-plugin:0.1.2'
 ```
 
 #### 第二步：

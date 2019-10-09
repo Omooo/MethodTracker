@@ -52,6 +52,6 @@ targetCompatibility = "7"
 //    groupId = 'top.omooo'
 //    repoName = 'MethodTrack'
 //    artifactId = 'method-track-plugin'
-//    publishVersion = '0.1.1'
+//    publishVersion = '0.1.2'
 //    desc = 'Plugin for MethodTracker.'
 //}

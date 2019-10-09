@@ -63,7 +63,7 @@ class TraceClassVisitor extends ClassVisitor {
         @Override
         AnnotationVisitor visitAnnotation(String descriptor, boolean visible) {
             if (Type.getDescriptor(MethodTrack.class) == descriptor) {
-                isNeedTrace = true
+                traceCurrentMethod = true
             }
             return super.visitAnnotation(descriptor, visible)
         }

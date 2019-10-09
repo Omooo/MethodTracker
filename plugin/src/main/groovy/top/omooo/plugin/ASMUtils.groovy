@@ -8,7 +8,7 @@ class ASMUtils {
     static ClassWriter insertByteCode(File inputFile) {
         def inputStream = new FileInputStream(inputFile)
         def classReader = new ClassReader(inputStream)
-        def classWrite = new ClassWriter(ClassWriter.COMPUTE_MAXS)
+        def classWrite = new ClassWriter(classReader, ClassWriter.COMPUTE_MAXS)
         def classVisitor = new TraceClassVisitor(classWrite)
         classReader.accept(classVisitor, ClassReader.EXPAND_FRAMES)
         return classWrite
